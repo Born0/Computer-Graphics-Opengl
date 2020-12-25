@@ -433,6 +433,16 @@ void mosque()
 
 
 }
+
+void train()
+{
+    glPushMatrix();
+    glTranslated(0,-.4,0);
+    glColor3ub(82,55,48);
+    quad( -1,-.5,-1,-.488,1,-.488,1,-.5);
+    glPopMatrix();
+}
+
 void display()
 {
    glClear(GL_COLOR_BUFFER_BIT);
@@ -473,6 +483,7 @@ void display()
         glPopMatrix();
     glPopMatrix();
 
+    train();
 
    glFlush();
 }
