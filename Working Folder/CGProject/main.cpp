@@ -437,10 +437,19 @@ void mosque()
 void train()
 {
     glPushMatrix();
-    glTranslated(0,-.4,0);
+    glTranslated(0,-.455,0);
     glColor3ub(82,55,48);
     quad( -1,-.5,-1,-.488,1,-.488,1,-.5);
+        glPushMatrix();
+            glTranslated(0,.1,0);
+            quad( -1,-.488,-1,-.5,1,-.5,1,-.488);
+        glPopMatrix();
+
+        //quad(-.99,-.48,-.99,);
+
     glPopMatrix();
+
+
 }
 
 void display()
