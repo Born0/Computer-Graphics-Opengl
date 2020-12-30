@@ -540,8 +540,13 @@ void keyboardHandle(unsigned char key, int x, int y) {
           break;
 
           case 'g':
-           PlaySound("F:/class/SMSTR 8/Computer Graphics/Project/Working Folder/MP3/train/trainsound.wav",NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
+           PlaySound("C:/Users/munta/Desktop/CGPROJECT/Computer-Graphics-Opengl/Working Folder/MP3/train/trainsound.wav",NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
           break;
+
+          case 'G':
+              PlaySound(NULL,NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
+          break;
+
       case 'e':
          exit(0);
          break;
