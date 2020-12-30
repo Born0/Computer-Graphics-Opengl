@@ -832,7 +832,7 @@ triangle(-0.59435,-0.0508,-0.5705,-0.0678,-0.5519,-0.0508);
 
 //ice cream shape
 iceCart();
-	glutSwapBuffers();
+
 }
 
 ///
@@ -868,32 +868,47 @@ void bogy() {
     glVertex2f(-0.3f,.23f);
     glEnd();
 
+    //
+    glPushMatrix();
+        glTranslated(.07,0,0);
+        glBegin(GL_QUADS);
+        glColor3ub(200,255,255);
+        glVertex2f(-.35f,.23f);
+        glVertex2f(-.35f,.18f);
+        glVertex2f(-.3f,.18f);
+        glVertex2f(-0.3f,.23f);
+        glEnd();
+    glPopMatrix();
 
-    glTranslated(0.1f,0.0f,0.0f);
-    glBegin(GL_QUADS);
-    glColor3ub(200,255,255);
-    glVertex2f(-.35f,.23f);
-    glVertex2f(-.35f,.18f);
-    glVertex2f(-.3f,.18f);
-    glVertex2f(-0.3f,.23f);
-    glEnd();
+    glPushMatrix();
+        glTranslated(.14,0,0);
+        glBegin(GL_QUADS);
+        glColor3ub(200,255,255);
+        glVertex2f(-.35f,.23f);
+        glVertex2f(-.35f,.18f);
+        glVertex2f(-.3f,.18f);
+        glVertex2f(-0.3f,.23f);
+        glEnd();
+    glPopMatrix();
 
+    glPushMatrix();
+        glTranslated(.21,0,0);
+        glBegin(GL_QUADS);
+        glColor3ub(200,255,255);
+        glVertex2f(-.35f,.23f);
+        glVertex2f(-.35f,.18f);
+        glVertex2f(-.3f,.18f);
+        glVertex2f(-0.3f,.23f);
+        glEnd();
+    glPopMatrix();
 
-    glTranslated(0.1f,0.0f,0.0f);
-    glBegin(GL_QUADS);
-    glColor3ub(200,255,255);
-    glVertex2f(-.35f,.23f);
-    glVertex2f(-.35f,.18f);
-    glVertex2f(-.3f,.18f);
-    glVertex2f(-0.3f,.23f);
-    glEnd();
-
-
-    glTranslated(-0.2f,-0.1f,0.0f);
-    glScalef(.4f,.4f,0.0f);
-    circle(-.7,.5,.1);
-    glTranslated(0.4f,0.0f,0.0f);
-    circle(-.7,.5,.1);
+        glPushMatrix();
+            glTranslated(0,-.1,0);
+            glScalef(.4f,.4f,0.0f);
+            circle(-.7,.5,.1);
+            glTranslated(0.4f,0.0f,0.0f);
+            circle(-.7,.5,.1);
+        glPopMatrix();
     glPopMatrix();
 
 }
@@ -901,18 +916,42 @@ void bogy() {
 void full_train()
 {
     glPushMatrix();
-        glScaled(.8,1,1);
-        glTranslated(.4,-1,0);
+
+      glTranslated(0,-1,0);
         bogy();
+
+      glPushMatrix();
+        glTranslated(.45,0,0);
+        bogy();
+      glPopMatrix();
+
+      glPushMatrix();
+        glTranslated(.9,0,0);
+        bogy();
+      glPopMatrix();
+
+      glPushMatrix();
+        glTranslated(-.45,0,0);
+        bogy();
+
         glPushMatrix();
-            glTranslated(.45,0,0);
-            bogy();
+            glTranslated(0,.14,0);
+            glBegin(GL_QUADS);
+            glColor3ub(160,160,160);
+            glVertex2f(-.35f,.25f);
+            glVertex2f(-.35f,.18f);
+            glVertex2f(-.3f,.18f);
+            glVertex2f(-0.3f,.25f);
+            glEnd();
         glPopMatrix();
-       glPushMatrix();
-            glTranslated(-.45,0,0);
-            bogy();
-       glPopMatrix();
+
+      glPopMatrix();
+
+
+
+
     glPopMatrix();
+
 }
 ///
 void display()
@@ -964,24 +1003,26 @@ void display()
 
     //---------------------------------------gate
     glPushMatrix();
-        gate();
+        //gate();
     glPopMatrix();
-    //-------------------------------Train
-    trainLine();
-    glPushMatrix();
-        full_train();
-    glPopMatrix();
+
 
 
     //-------------------------------------------LABU
     glPushMatrix();
         glScaled(1.3,1.7,1);
         glTranslated(.2,0,0);
-        item();
+        //item();
+
     glPopMatrix();
 
+    //-------------------------------Train
+    trainLine();
+    glPushMatrix();
+        full_train();
+    glPopMatrix();
 
-
+   glutSwapBuffers();
    glFlush();
 }
 
