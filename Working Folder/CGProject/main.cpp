@@ -15,6 +15,11 @@ float anglel_N = 0.0f;
 GLfloat speed_M= 0.0f;
 GLfloat speed_N = 0.0f;
 
+GLfloat trainSpeed=0.02f;
+GLfloat trainPos = 0.0f;
+
+
+
 void line(double a1,double b1,double a2,double b2) // to draw line
 {
     glBegin(GL_LINES);
@@ -84,6 +89,16 @@ else if(anglel_N<-10)
 {
     speed_N=+0.5;
 }
+
+     if(trainPos<-2)
+     {
+        trainPos=1.8;
+     }
+     else if(trainPos>1.8)
+     {
+       trainPos=-1.8;
+     }
+
 
 	glutPostRedisplay();
 	glutTimerFunc(100, update, 0);
@@ -498,6 +513,20 @@ void keyboardHandle(unsigned char key, int x, int y) {
         break;
       case 'N':
           speed_N = 0.0;
+          break;
+          //Train Start
+          case 'w':
+
+          trainPos-=trainSpeed;
+          update(0);
+          break;
+          case 's':
+          trainPos+=trainSpeed;
+          update(0);
+          break;
+
+          case 'g':
+           PlaySound("C:/Users/munta/Desktop/CGPROJECT/Computer-Graphics-Opengl/Working Folder/MP3/train/trainsound.wav",NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
           break;
       case 'e':
          exit(0);
@@ -917,7 +946,7 @@ void full_train()
 {
     glPushMatrix();
 
-      glTranslated(0,-1,0);
+      glTranslated(trainPos,-1,0);
         bogy();
 
       glPushMatrix();
@@ -942,6 +971,39 @@ void full_train()
             glVertex2f(-.35f,.18f);
             glVertex2f(-.3f,.18f);
             glVertex2f(-0.3f,.25f);
+            glEnd();
+        glPopMatrix();
+
+        glPushMatrix();
+            glTranslated(.35,-.05,0);
+            glBegin(GL_QUADS);
+            glColor3ub(0,0,0);
+            glVertex2f(-.35f,.23f);
+            glVertex2f(-.35f,.18f);
+            glVertex2f(-.3f,.18f);
+            glVertex2f(-0.3f,.23f);
+            glEnd();
+        glPopMatrix();
+
+        glPushMatrix();
+            glTranslated(.8,-.05,0);
+            glBegin(GL_QUADS);
+            glColor3ub(0,0,0);
+            glVertex2f(-.35f,.23f);
+            glVertex2f(-.35f,.18f);
+            glVertex2f(-.3f,.18f);
+            glVertex2f(-0.3f,.23f);
+            glEnd();
+        glPopMatrix();
+
+        glPushMatrix();
+            glTranslated(1.25,-.05,0);
+            glBegin(GL_QUADS);
+            glColor3ub(0,0,0);
+            glVertex2f(-.35f,.23f);
+            glVertex2f(-.35f,.18f);
+            glVertex2f(-.3f,.18f);
+            glVertex2f(-0.3f,.23f);
             glEnd();
         glPopMatrix();
 
