@@ -190,7 +190,7 @@ void gate()
 
     glPushMatrix();
     glScaled(.9,.7,1);
-    glTranslated(-.1,-.05,0);
+    glTranslated(-.1,-.25,0);
     //--------------------------left
     glPushMatrix();
     glScaled(1,2,1);
@@ -221,7 +221,11 @@ void gate()
     glPushMatrix();
     printText(-.165, -.3,carnival);
     glPopMatrix();
-
+    //--------------------------fence
+     glPushMatrix();
+        glColor3ub(230,196,38);
+        quad( -1,-.65,-1,-.67,-.4,-.67,-.4,-.65);
+     glPopMatrix();
     glPopMatrix();
 
 }
@@ -504,7 +508,6 @@ void keyboardHandle(unsigned char key, int x, int y) {
          break;
    }
 }
-//-----------------------------------------ICE cart
 void iceCart()
 {
     glColor3ub(100, 30, 22);
@@ -832,7 +835,10 @@ triangle(-0.59435,-0.0508,-0.5705,-0.0678,-0.5519,-0.0508);
 
 //ice cream shape
 iceCart();
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 }
 
 ///
@@ -1000,29 +1006,44 @@ void display()
             character();
         glPopMatrix();
     glPopMatrix();
-
     //---------------------------------------gate
     glPushMatrix();
+<<<<<<< Updated upstream
         //gate();
     glPopMatrix();
 
 
 
+=======
+        gate();
+    glPopMatrix();
+>>>>>>> Stashed changes
     //-------------------------------------------LABU
     glPushMatrix();
         glScaled(1.3,1.7,1);
         glTranslated(.2,0,0);
+<<<<<<< Updated upstream
         //item();
 
     glPopMatrix();
 
     //-------------------------------Train
+=======
+        item();
+
+    glPopMatrix();
+ //-------------------------------Train
+>>>>>>> Stashed changes
     trainLine();
     glPushMatrix();
         full_train();
     glPopMatrix();
 
+<<<<<<< Updated upstream
    glutSwapBuffers();
+=======
+    glutSwapBuffers();
+>>>>>>> Stashed changes
    glFlush();
 }
 
