@@ -8,7 +8,7 @@
 	<windows.h>
 	<mmsystem.h>
 
-1609343896 source:c:\users\munta\desktop\cgproject\computer-graphics-opengl\working folder\cgproject\main.cpp
+1609344144 source:c:\users\munta\desktop\cgproject\computer-graphics-opengl\working folder\cgproject\main.cpp
 	<iostream>
 	<GL/gl.h>
 	<GL/glut.h>
