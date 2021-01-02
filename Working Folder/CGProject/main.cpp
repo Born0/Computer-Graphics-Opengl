@@ -87,21 +87,21 @@ void circle(GLfloat x, GLfloat y, GLfloat radius) // to draw circle
 void update(int value)
 {
 //FOR MARRY GO ROUND
-anglel_M+= speed_M;
-if (anglel_M>360)
-{
-    anglel_M-=360;
-}
-//FOR BOAT
-anglel_N+=speed_N;
-if (anglel_N> 10)
-{
-    speed_N = -0.5;
-}
-else if(anglel_N<-10)
-{
-    speed_N=+0.5;
-}
+    anglel_M+= speed_M;
+    if (anglel_M>360)
+    {
+        anglel_M-=360;
+    }
+    //FOR BOAT
+    anglel_N+=speed_N;
+    if (anglel_N> 10)
+    {
+        speed_N = -0.5;
+    }
+    else if(anglel_N<-10)
+    {
+        speed_N=+0.5;
+    }
 
      if(trainPos<-2)
      {
@@ -118,6 +118,11 @@ else if(anglel_N<-10)
     if(rainPosX<-0.1)
     {
         rainPosX=.05;
+    }
+    if(vrain)
+    {
+        rainPos-=rainSpeed;
+        rainPosX-=rainSpeedX;
     }
 
 	glutPostRedisplay();
@@ -1044,7 +1049,7 @@ void keyboardHandle(unsigned char key, int x, int y)
           update(0);
           break;
         case 'g':
-            PlaySound("F:/class/SMSTR 8/Computer Graphics/Project/Working Folder/MP3/train/trainsound.wav",NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
+            PlaySound("trainsound.wav",NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
           break;
         case 'G':
             PlaySound(NULL,NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
@@ -1058,9 +1063,7 @@ void keyboardHandle(unsigned char key, int x, int y)
             break;
         case 'r':
             vrain=true;
-            rainPos-=rainSpeed;
-            rainPosX-=rainSpeedX;
-          update(0);
+
             break;
         case 'R':
             vrain=false;
