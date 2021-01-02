@@ -521,11 +521,11 @@ void keyboardHandle(unsigned char key, int x, int y) {
       case 'M':
         speed_M=0.0;
         break;
-      case 'n':
+      case 'b':
         speed_N+=0.4;
         update(0);
         break;
-      case 'N':
+      case 'B':
           speed_N = 0.0;
           break;
           //Train Start
@@ -540,7 +540,7 @@ void keyboardHandle(unsigned char key, int x, int y) {
           break;
 
           case 'g':
-           PlaySound("C:/Users/munta/Desktop/CGPROJECT/Computer-Graphics-Opengl/Working Folder/MP3/train/trainsound.wav",NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
+           PlaySound("F:/class/SMSTR 8/Computer Graphics/Project/Working Folder/MP3/train/trainsound.wav",NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
           break;
 
           case 'G':
@@ -1111,8 +1111,8 @@ int main(int argc, char** argv) {
    glutInit(&argc, argv);
    cout<<"\n Press 'm' for rotating the Marry Go Round.\n";
 	cout<<"\n Press 'Shift m' for stop the rotation of Marry Go Round.\n";
-    cout<<"\n Press 'n' for swinging the Boat.\n";
-	cout<<"\n Press 'Shift n' for stop the swinging.\n";
+    cout<<"\n Press 'b' for swinging the Boat.\n";
+	cout<<"\n Press 'Shift b' for stop the swinging.\n";
 	cout<<"\n Press 'e' for exit.\n";
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
    glutInitWindowSize(1800, 900);
