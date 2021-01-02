@@ -9,7 +9,8 @@
 using namespace std;
 
 bool night=false;
-char carnival[]="Carnival";
+bool vrain=false;
+char carnival[]="EID CARNIVAL";
 //
 float anglel_M = 0.0f;
 float anglel_N = 0.0f;
@@ -18,6 +19,11 @@ GLfloat speed_N = 0.0f;
 
 GLfloat trainSpeed=0.02f;
 GLfloat trainPos = 0.0f;
+
+GLfloat rainSpeed=0.02f;
+GLfloat rainPos = 0.0f;
+GLfloat rainSpeedX=0.01f;
+GLfloat rainPosX = 0.0f;
 
 GLfloat positionOfCloud1 = 0.0f;
 GLfloat speedOfCloud1 = 0.001f;
@@ -61,7 +67,7 @@ void printText( float x, float y, char *st) // to print string
     glRasterPos2f( x, y);
     for( i=0; i < l; i++)
     {
-       glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12, st[i]);
+       glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, st[i]);
     }
 }
 
@@ -105,7 +111,14 @@ else if(anglel_N<-10)
      {
        trainPos=-1.8;
      }
-
+     if(rainPos<-.001)
+     {
+        rainPos=.5;
+     }
+    if(rainPosX<-0.1)
+    {
+        rainPosX=.05;
+    }
 
 	glutPostRedisplay();
 	glutTimerFunc(100, update, 0);
@@ -215,7 +228,7 @@ void stars()
 {
     glPointSize( 2.5 );
     glBegin(GL_POINTS);
-    glColor3ub(255, 255, 255);
+    glColor3ub(247, 240, 188);
     glVertex2f(0.8f,0.95f);
     glVertex2f(0.9f,0.9f);
     glVertex2f(0.95f,0.7f);
@@ -276,7 +289,7 @@ void moon()
 
     GLfloat x= -0.87f; GLfloat y=0.88f; GLfloat radius =0.07f;
     int triangleAmount = 100;
-    glColor3f(1.0f, 1.0f, 1.0f);
+    glColor3ub(247, 240, 188);
     GLfloat twicePi = 2.0f * PI;
     glBegin(GL_TRIANGLE_FAN);
         glVertex2f(x, y);
@@ -586,7 +599,7 @@ void gate()
             quad( -.345, -.37, .1, -.37,.1, -.2 ,-.345, -.2 );
 
         glPushMatrix();
-            printText(-.165, -.3,carnival);
+            printText(-.2, -.3,carnival);
         glPopMatrix();
         //--------------------------fence
         glPushMatrix();
@@ -600,11 +613,134 @@ void gate()
             quad( -1,-.65,-1,-.67,-.4,-.67,-.4,-.65);
             quad( .15,-.65,.15,-.67,.6,-.67,.6,-.65);
         glPopMatrix();
-
-
+        glPushMatrix();// fence front corner
+            glTranslated(.95,-.37,0);
+            quad( -.360, -.37, -.334, -.37,-.334, -.138 , -.360, -.138);
+        glPopMatrix();
+        glPushMatrix();// fence back corner
+            glScaled(1,.51,1);
+            glTranslated(.935,.6,0);
+            quad( -.360, -.37, -.334, -.37,-.334, -.138 , -.360, -.138);
+        glPopMatrix();
+        glPushMatrix();
+            glTranslated(.1,0,0);
+            quad(.5,-.55,.51,-.55,.49,.2,.48,.2);
+        glPopMatrix();
 
     glPopMatrix();
 
+}
+
+void rain()
+{
+    float x=-1.0;
+    float temp=0.9;
+    for (int j=0;j<20;j++)
+    {
+        float y=temp;
+        for (int l=0;l<30;l++)
+        {
+            glPushMatrix();
+            glTranslatef(rainPosX,rainPos,0.0f);
+            glBegin(GL_LINES);
+            glColor3ub(222, 222, 222);
+            glVertex2f(x,y);
+            x+=.05;
+            y+=.1;
+            glVertex2f(x,y);
+            glEnd();
+            y=temp;
+            x=x+.1;
+            glPopMatrix();
+        }
+        temp-=.2;x=-1;
+    }
+    glEnd();
+}
+void Ttree()
+{
+    glPushMatrix();
+    glScaled(.6,.6,1);
+        glBegin(GL_QUADS);
+        glColor3ub(79, 38, 56);
+        glVertex2f(-0.01f,0.4f);
+        glVertex2f(-0.01f,0.0f);
+        glVertex2f(0.01f,0.0f);
+        glVertex2f(0.01f,0.4f);
+        glEnd();
+
+
+
+        glColor3ub(82, 194, 41);
+        glBegin(GL_TRIANGLES);
+        glVertex2f(0.0f,0.4f);
+        glVertex2f(-0.15f,0.3f);
+        glVertex2f(0.15f,0.3f);
+        glEnd();
+
+        glPushMatrix();
+        glTranslatef(0.0f,0.05f,0.0f);
+        glBegin(GL_TRIANGLES);
+        glVertex2f(0.0f,0.45f);
+        glVertex2f(-0.15f,0.3f);
+        glVertex2f(0.15f,0.3f);
+        glEnd();
+        glPopMatrix();
+    glPopMatrix();
+
+}
+
+void tree()
+{
+    glPushMatrix();
+        glScaled(.8,.8,1);
+        int i;
+        int lineAmount = 21;
+        GLfloat x=.0f; GLfloat y=.0f; GLfloat radius =.1f;
+        //GLfloat radius = 0.8f; //radius
+        GLfloat twicePi = 2.0f * PI;
+        glBegin(GL_QUADS);
+        glColor3ub(108, 48, 23 );
+        glVertex2f(0.75f,-0.7f);
+        glVertex2f(0.78f,-0.7f);
+        glVertex2f(0.78f,-0.4f);
+        glVertex2f(0.75f,-0.4f);
+        glEnd();
+         x=0.7f; y=-.4f; radius =.1f;
+        glBegin(GL_TRIANGLE_FAN);
+        glColor3ub(43, 117, 18 );
+            for(i = 0; i <= lineAmount;i++) {
+                glVertex2f(
+                    x + (radius * cos(i *  twicePi / lineAmount)),
+                    y + (radius* sin(i * twicePi / lineAmount))
+                );
+            }
+
+        glEnd();
+
+         x=0.8f; y=-.4f; radius =.1f;
+        glBegin(GL_TRIANGLE_FAN);
+        glColor3ub(43, 117, 18);
+            for(i = 0; i <= lineAmount;i++) {
+                glVertex2f(
+                    x + (radius * cos(i *  twicePi / lineAmount)),
+                    y + (radius* sin(i * twicePi / lineAmount))
+                );
+            }
+
+        glEnd();
+         x=0.75f; y=-.3f; radius =.08f;
+        glBegin(GL_TRIANGLE_FAN);
+        glColor3ub(43, 117, 18);
+            for(i = 0; i <= lineAmount;i++) {
+                glVertex2f(
+                    x + (radius * cos(i *  twicePi / lineAmount)),
+                    y + (radius* sin(i * twicePi / lineAmount))
+                );
+            }
+
+        glEnd();
+    glPopMatrix();
 }
 
 void character()
@@ -685,21 +821,21 @@ void mosque()
         glColor3ub(210,200,160);
         glTranslated(0,-.02,0);
         quad(.63,-.02,.63,-.113,.948,-.113,.948,-.02);
-        glColor3ub(60,120,60);//left window
+        glColor3ub(60,120,60);
         quad( .64,-.038 ,.64 ,-.094 ,.68 ,-.094 ,.68 ,-.038 );
         glPushMatrix();
             glTranslated(.05,0,0);
-            glColor3ub(60,120,60);
+            //glColor3ub(60,120,60);
             quad( .64,-.038 ,.64 ,-.094 ,.68 ,-.094 ,.68 ,-.038 );// 2nd left window
         glPopMatrix();
 
         glPushMatrix();
             glTranslated(.2,0,0);
-            glColor3ub(60,120,60);//right window
+            //glColor3ub(60,120,60);//right window
             quad( .64,-.038 ,.64 ,-.094 ,.68 ,-.094 ,.68 ,-.038 );
             glPushMatrix();
                 glTranslated(.05,0,0);
-                glColor3ub(60,120,60);
+                //glColor3ub(60,120,60);
                 quad( .64,-.038 ,.64 ,-.094 ,.68 ,-.094 ,.68 ,-.038 );// 2nd right window
             glPopMatrix();
         glPopMatrix();
@@ -744,21 +880,28 @@ void mosque()
 
 
 
-        glColor3ub(60,120,60);//left window
+         if(night)                                     //left window
+        {
+           glColor3ub(247, 240, 188);
+        }
+        else
+        {
+            glColor3ub(60,120,60);
+        }//left window
         quad( .64,-.038 ,.64 ,-.094 ,.68 ,-.094 ,.68 ,-.038 );
         glPushMatrix();
             glTranslated(.05,0,0);
-            glColor3ub(60,120,60);
+            //glColor3ub(60,120,60);
             quad( .64,-.038 ,.64 ,-.094 ,.68 ,-.094 ,.68 ,-.038 );// 2nd left window
         glPopMatrix();
 
         glPushMatrix();
             glTranslated(.2,0,0);
-            glColor3ub(60,120,60);//right window
+            //glColor3ub(60,120,60);//right window
             quad( .64,-.038 ,.64 ,-.094 ,.68 ,-.094 ,.68 ,-.038 );
             glPushMatrix();
                 glTranslated(.05,0,0);
-                glColor3ub(60,120,60);
+                //glColor3ub(60,120,60);
                 quad( .64,-.038 ,.64 ,-.094 ,.68 ,-.094 ,.68 ,-.038 );// 2nd right window
             glPopMatrix();
         glPopMatrix();
@@ -841,6 +984,11 @@ void mosque()
         glPopMatrix();
     glPopMatrix();
 
+    glPushMatrix();
+        glColor3ub(200,143,93);
+        glTranslated(.12,0,0);
+        quad(.435,-.61,.515,-.61,.5,.0,.45,.0);
+    glPopMatrix();
 
 }
 
@@ -867,8 +1015,8 @@ void trainLine()
 
 }
 
-
-void keyboardHandle(unsigned char key, int x, int y) {
+void keyboardHandle(unsigned char key, int x, int y)
+{
 
    switch (key) {
       case 'm':
@@ -887,34 +1035,43 @@ void keyboardHandle(unsigned char key, int x, int y) {
           speed_N = 0.0;
           break;
           //Train Start
-          case 'w':
-            PlaySound("F:/class/SMSTR 8/Computer Graphics/Project/Working Folder/MP3/train/trainsound.wav",NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
+        case 'w':
           trainPos-=trainSpeed;
           update(0);
           break;
-          case 's':
+        case 's':
           trainPos+=trainSpeed;
-          PlaySound("F:/class/SMSTR 8/Computer Graphics/Project/Working Folder/MP3/train/trainsound.wav",NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
           update(0);
           break;
-
-          case 'g':
-              PlaySound(NULL,NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
+        case 'g':
+            PlaySound("F:/class/SMSTR 8/Computer Graphics/Project/Working Folder/MP3/train/trainsound.wav",NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
+          break;
+        case 'G':
+            PlaySound(NULL,NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
           break;
 
-          case 'n':
+        case 'n':
             night=true;
             break;
-            case 'N':
+        case 'N':
             night=false;
             break;
+        case 'r':
+            vrain=true;
+            rainPos-=rainSpeed;
+            rainPosX-=rainSpeedX;
+          update(0);
+            break;
+        case 'R':
+            vrain=false;
+            break;
+
 
         case 'e':
          exit(0);
          break;
    }
 }
-//-----------------------------------------ICE cart
 void iceCart()
 {
     glColor3ub(100, 30, 22);
@@ -1246,8 +1403,8 @@ iceCart();
 
 }
 
-///
-void bogy() {
+void bogy()
+{
 
     glPushMatrix();
 
@@ -1272,7 +1429,14 @@ void bogy() {
 
     //window==================
     glBegin(GL_QUADS);
-    glColor3ub(37,47,53);
+    if(night)
+    {
+       glColor3ub(247, 240, 188);
+    }
+    else
+    {
+        glColor3ub(37,47,53);
+    }
     glVertex2f(-.35f,.23f);
     glVertex2f(-.35f,.18f);
     glVertex2f(-.3f,.18f);
@@ -1325,7 +1489,7 @@ void bogy() {
 
 }
 
-void full_train()
+void completeTrain()
 {
     glPushMatrix();
 
@@ -1398,7 +1562,7 @@ void full_train()
     glPopMatrix();
 
 }
-///
+
 void display()
 {
    glClear(GL_COLOR_BUFFER_BIT);
@@ -1452,7 +1616,44 @@ void display()
         mosque();
      glPopMatrix();
 
-    //--------------------------------------character right
+         //---------------------------------------gate
+    glPushMatrix();
+        gate();
+    glPopMatrix();
+
+     //----------------------------------------TREE
+        glPushMatrix();
+         glTranslated(0,-.15,0);
+         tree();
+     glPopMatrix();
+     glPushMatrix();
+         glTranslated(.3,-.15,0);
+         tree();
+     glPopMatrix();
+
+     glPushMatrix();
+         glTranslated(-0.68,0.48,0);
+         tree();
+     glPopMatrix();
+     //tria tree
+     glPushMatrix();
+         glTranslated(.38,-.58,0);
+         Ttree();
+     glPopMatrix();
+
+     glPushMatrix();
+         glTranslated(.15,-.58,0);
+         Ttree();
+     glPopMatrix();
+
+     glPushMatrix();
+     glTranslated(-.6,-.6,0);
+         Ttree();
+     glPopMatrix();
+    //////////
+    if(!night && !vrain)
+    {
+            //--------------------------------------character right
     glPushMatrix();
     glTranslated(.15,0,0);
     glScaled(.8,.8,1);
@@ -1464,12 +1665,7 @@ void display()
             character();
         glPopMatrix();
     glPopMatrix();
-
-    //---------------------------------------gate
-    glPushMatrix();
-        gate();
-    glPopMatrix();
-
+    }
 
 
     //-------------------------------------------LABU
@@ -1483,7 +1679,13 @@ void display()
     //-------------------------------Train
     trainLine();
     glPushMatrix();
-        full_train();
+        completeTrain();
+    glPopMatrix();
+    glPushMatrix();
+        if(vrain)
+        {
+            rain();
+        }
     glPopMatrix();
 
    glutSwapBuffers();
@@ -1515,25 +1717,3 @@ int main(int argc, char** argv) {
     glutMainLoop();
    return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
