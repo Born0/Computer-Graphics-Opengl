@@ -5,10 +5,11 @@
 #include <math.h>
 #include<windows.h>
 #include<mmsystem.h>
+#define PI     3.14159265358979323846
 using namespace std;
 
 bool night=false;
-char carnival[]="CARNIVAL";
+char carnival[]="Carnival";
 //
 float anglel_M = 0.0f;
 float anglel_N = 0.0f;
@@ -18,7 +19,13 @@ GLfloat speed_N = 0.0f;
 GLfloat trainSpeed=0.02f;
 GLfloat trainPos = 0.0f;
 
+GLfloat positionOfCloud1 = 0.0f;
+GLfloat speedOfCloud1 = 0.001f;
+GLfloat positionOfCloud2 = 0.0f;
+GLfloat speedOfCloud2 = 0.002f;
 
+GLfloat positionOfBird = 0.0f;
+GLfloat speedOfBird = 0.003f;
 
 void line(double a1,double b1,double a2,double b2) // to draw line
 {
@@ -103,12 +110,357 @@ else if(anglel_N<-10)
 	glutPostRedisplay();
 	glutTimerFunc(100, update, 0);
 }
+
+void cloudAnimation1(int value)
+{
+    if(positionOfCloud1 < -1.7f)
+        positionOfCloud1 = 0.6f;
+
+    positionOfCloud1 -= speedOfCloud1;
+    glutPostRedisplay();
+    glutTimerFunc(40, cloudAnimation1, 0);
+}
+void cloudAnimation2(int value)
+{
+    if(positionOfCloud2 < -0.6f)
+        positionOfCloud2 = 1.6f;
+
+    positionOfCloud2 -= speedOfCloud2;
+    glutPostRedisplay();
+    glutTimerFunc(40, cloudAnimation2, 0);
+
+}
+void daysky()
+{
+    glColor3ub(100, 160, 210);
+    glBegin(GL_QUADS);
+    glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+    glVertex2f(-1.0,0);
+    glVertex2f(1.0,0);
+    glColor4f(0.6f, 0.8f, 1.0f, 1.0f);
+    glVertex2f(1.0,1.0);
+    glVertex2f(-1.0,1.0);
+    glEnd();
+
+}
+
+void nightsky()
+{
+    glColor3ub(13, 42, 67);
+    glBegin(GL_QUADS);
+    //glColor3f(0.0f, 0.0f, 0.0f);
+    glVertex2f(-1.0,0);
+    glVertex2f(1.0,0);
+    glVertex2f(1.0,1.0);
+    glVertex2f(-1.0,1.0);
+    glEnd();
+
+}
+
+void birdAnimation(int value)
+{
+    if(positionOfBird > 1.1f)
+        positionOfBird = -1.1f;
+
+    positionOfBird += speedOfBird;
+    glutPostRedisplay();
+    glutTimerFunc(20, birdAnimation, 0);
+}
+void bird()//blue bird
+{
+    glPushMatrix();
+    glTranslatef(positionOfBird, 0.0f, 0.0f);
+    int i;
+	GLfloat mmm=0.062f; GLfloat nnn=.801f; GLfloat radiusmmm =.01f;
+	int triangleAmount = 20;
+	GLfloat twicePi = 2.0f * PI;
+
+	glBegin(GL_TRIANGLE_FAN);
+	    glColor3ub(0, 0, 255);
+		glVertex2f(mmm, nnn); // center of circle
+		for(i = 0; i <= triangleAmount;i++) {
+			glVertex2f(
+		            mmm + (radiusmmm * cos(i *  twicePi / triangleAmount)),
+			    nnn + (radiusmmm * sin(i * twicePi / triangleAmount))
+			);
+		}
+	glEnd();
+
+	glBegin(GL_POLYGON);
+    glVertex2f(-0.02f,0.8f);
+    glVertex2f(-0.01f,0.79f);
+    glVertex2f(0.0f,0.78f);
+    glVertex2f(0.04f,0.77f);
+    glVertex2f(0.07f,0.79f);
+    glVertex2f(0.081f,0.8f);
+    glEnd();
+
+    glBegin(GL_TRIANGLES);
+    glVertex2f(0.055f,0.8f);
+    glVertex2f(0.03f,0.8f);
+    glVertex2f(0.02f,0.84f);
+    glEnd();
+
+
+    glBegin(GL_TRIANGLES);
+    glColor3ub(242, 242, 242 );
+    glVertex2f(0.055f,0.8f);
+    glVertex2f(0.024f,0.8f);
+    glVertex2f(0.0f,0.83f);
+    glEnd();
+    glPopMatrix();
+}
+
+void stars()
+{
+    glPointSize( 2.5 );
+    glBegin(GL_POINTS);
+    glColor3ub(255, 255, 255);
+    glVertex2f(0.8f,0.95f);
+    glVertex2f(0.9f,0.9f);
+    glVertex2f(0.95f,0.7f);
+    glVertex2f(0.8f,0.8f);
+    glVertex2f(0.7f,0.9f);
+    glVertex2f(0.6f,0.8f);
+    glVertex2f(0.5f,0.75f);
+    glVertex2f(0.4f,0.9f);
+    glVertex2f(0.3f,0.7f);
+    glVertex2f(0.25f,0.9f);
+    glVertex2f(0.25f,0.7f);
+    glVertex2f(0.1f,0.9f);
+    glVertex2f(0.15f,0.75f);
+    glVertex2f(0.0f,0.8f);
+    glVertex2f(-0.7f,0.9f);
+    glVertex2f(-0.8f,0.95f);
+    glVertex2f(-0.4f,0.8f);
+    glVertex2f(-0.8f,0.95f);
+    glVertex2f(-0.9f,0.9f);
+    glVertex2f(-0.95f,0.7f);
+    glVertex2f(-0.8f,0.8f);
+    glVertex2f(-0.7f,0.9f);
+    glVertex2f(-0.6f,0.8f);
+    glVertex2f(-0.5f,0.75f);
+    glVertex2f(-0.4f,0.9f);
+    glVertex2f(-0.3f,0.7f);
+    glVertex2f(-0.25f,0.9f);
+    glVertex2f(-0.25f,0.7f);
+    glVertex2f(-0.15f,0.75f);
+    glVertex2f(-0.1f,0.9f);
+    glEnd();
+
+}
+
+void sun()
+{
+    int i;
+
+    GLfloat x= -0.84f; GLfloat y=0.88f; GLfloat radius =0.1f;
+    int triangleAmount = 100;
+    glColor3f(1.0f, 1.0f, 0.0f);
+    GLfloat twicePi = 2.0f * PI;
+    glBegin(GL_TRIANGLE_FAN);
+        glVertex2f(x, y);
+        for(i = 0; i <= triangleAmount;i++) {
+            glVertex2f(
+                    x + (radius * cos(i *  twicePi / triangleAmount)),
+                y + (radius * sin(i * twicePi / triangleAmount))
+            );
+        }
+    glEnd();
+
+}
+
+void moon()
+{
+    int i;
+
+    GLfloat x= -0.87f; GLfloat y=0.88f; GLfloat radius =0.07f;
+    int triangleAmount = 100;
+    glColor3f(1.0f, 1.0f, 1.0f);
+    GLfloat twicePi = 2.0f * PI;
+    glBegin(GL_TRIANGLE_FAN);
+        glVertex2f(x, y);
+        for(i = 0; i <= triangleAmount;i++) {
+            glVertex2f(
+                    x + (radius * cos(i *  twicePi / triangleAmount)),
+                y + (radius * sin(i * twicePi / triangleAmount))
+            );
+        }
+    glEnd();
+
+}
+
+void cloud1()
+{
+    glPushMatrix();
+    glTranslatef(positionOfCloud1, 0.05f, 0.0f);
+        int i;
+
+        GLfloat x=.5f; GLfloat y=.90f; GLfloat radius =.05f;
+        int triangleAmount = 20;
+        GLfloat twicePi = 2.0f * PI;
+
+        glBegin(GL_TRIANGLE_FAN);
+            glColor3ub(255, 240, 255);
+            glVertex2f(x, y); // center of circle
+            for(i = 0; i <= triangleAmount;i++) {
+                glVertex2f(
+                        x + (radius * cos(i *  twicePi / triangleAmount)),
+                    y + (radius * sin(i * twicePi / triangleAmount))
+                );
+            }
+        glEnd();
+
+        GLfloat a=.55f; GLfloat b=.87f;
+
+        glBegin(GL_TRIANGLE_FAN);
+            glVertex2f(a, b); // center of circle
+            for(i = 0; i <= triangleAmount;i++) {
+                glVertex2f(
+                        a + (radius * cos(i *  twicePi / triangleAmount)),
+                    b + (radius * sin(i * twicePi / triangleAmount))
+                );
+            }
+        glEnd();
+
+        GLfloat c=.45f; GLfloat d=.87f;
+
+        glBegin(GL_TRIANGLE_FAN);
+            glVertex2f(c, d); // center of circle
+            for(i = 0; i <= triangleAmount;i++) {
+                glVertex2f(
+                        c + (radius * cos(i *  twicePi / triangleAmount)),
+                    d + (radius * sin(i * twicePi / triangleAmount))
+                );
+            }
+        glEnd();
+
+        GLfloat e=.52f; GLfloat f=.84f;
+
+        glBegin(GL_TRIANGLE_FAN);
+            glVertex2f(e, f); // center of circle
+            for(i = 0; i <= triangleAmount;i++) {
+                glVertex2f(
+                        e + (radius * cos(i *  twicePi / triangleAmount)),
+                    f+ (radius * sin(i * twicePi / triangleAmount))
+                );
+            }
+        glEnd();
+
+        GLfloat g=.6f; GLfloat h=.86f;
+
+        glBegin(GL_TRIANGLE_FAN);
+            glVertex2f(g, h); // center of circle
+            for(i = 0; i <= triangleAmount;i++) {
+                glVertex2f(
+                        g + (radius * cos(i *  twicePi / triangleAmount)),
+                    h+ (radius * sin(i * twicePi / triangleAmount))
+                );
+            }
+        glEnd();
+    glPopMatrix();
+}
+
+void cloud2()
+{
+    glPushMatrix();
+    glTranslatef(positionOfCloud2, -0.02f, 0.0f);
+
+        int i;
+
+        GLfloat x=-.5f; GLfloat y=.84f; GLfloat radius =.05f;
+        int triangleAmount = 20;
+        GLfloat twicePi = 2.0f * PI;
+
+        glBegin(GL_TRIANGLE_FAN);
+            glColor3ub(255, 240, 255);
+            glVertex2f(x, y); // center of circle
+            for(i = 0; i <= triangleAmount;i++) {
+                glVertex2f(
+                        x + (radius * cos(i *  twicePi / triangleAmount)),
+                    y + (radius * sin(i * twicePi / triangleAmount))
+                );
+            }
+        glEnd();
+
+        GLfloat a=-.55f; GLfloat b=.81f;
+
+        glBegin(GL_TRIANGLE_FAN);
+            glVertex2f(a, b); // center of circle
+            for(i = 0; i <= triangleAmount;i++) {
+                glVertex2f(
+                        a + (radius * cos(i *  twicePi / triangleAmount)),
+                    b + (radius * sin(i * twicePi / triangleAmount))
+                );
+            }
+        glEnd();
+
+        GLfloat c=-.45f; GLfloat d=.81f;
+
+        glBegin(GL_TRIANGLE_FAN);
+            glVertex2f(c, d); // center of circle
+            for(i = 0; i <= triangleAmount;i++) {
+                glVertex2f(
+                        c + (radius * cos(i *  twicePi / triangleAmount)),
+                    d + (radius * sin(i * twicePi / triangleAmount))
+                );
+            }
+        glEnd();
+
+        GLfloat e=-.52f; GLfloat f=.78f;
+
+        glBegin(GL_TRIANGLE_FAN);
+            glVertex2f(e, f); // center of circle
+            for(i = 0; i <= triangleAmount;i++) {
+                glVertex2f(
+                        e + (radius * cos(i *  twicePi / triangleAmount)),
+                    f+ (radius * sin(i * twicePi / triangleAmount))
+                );
+            }
+        glEnd();
+
+        GLfloat g=-.6f; GLfloat h=.80f;
+
+        glBegin(GL_TRIANGLE_FAN);
+            glVertex2f(g, h); // center of circle
+            for(i = 0; i <= triangleAmount;i++) {
+                glVertex2f(
+                        g + (radius * cos(i *  twicePi / triangleAmount)),
+                    h+ (radius * sin(i * twicePi / triangleAmount))
+                );
+            }
+        glEnd();
+    glPopMatrix();
+}
+
+void myDisplay1(void)
+{
+glClearColor(0.53f,0.81f,0.92f,0.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+	glLoadIdentity();
+	  daysky();
+       sun();
+	  cloud1();
+   cloud2();
+   bird();
+   glFlush();
+}
+void myDisplay2(void)
+{
+   glClear(GL_COLOR_BUFFER_BIT);
+   glLoadIdentity();
+   nightsky();
+    stars();
+   moon();
+   glFlush();
+}
+
 void backGround()
 {
     //---------------------------------------------SKY
-    if(!  night){glColor3ub(100, 160, 210);}
-    else{ glColor3ub(13, 42, 67);}
-    quad( -1,-1,1,-1 ,1,1 ,-1,1 );
+   /* if(!  night){glColor3ub(100, 160, 210);}
+    else{ glColor3ub(13, 42, 67);}*/
+    //quad( -1,-1,1,-1 ,1,1 ,-1,1 );
 
     //----------------------------------green ->back
     glColor3ub(4,88,50);
@@ -496,6 +848,12 @@ void trainLine()
 {
     glPushMatrix();
     glTranslated(0,-.455,0);
+        glPushMatrix();
+            glScaled(1,10,1);
+            glTranslated(0,.448,0);
+            glColor3ub(128,116,120);
+            quad( -1,-.5,-1,-.488,1,-.488,1,-.5);
+        glPopMatrix();
     glColor3ub(82,55,48);
     quad( -1,-.5,-1,-.488,1,-.488,1,-.5);
         glPushMatrix();
@@ -530,24 +888,28 @@ void keyboardHandle(unsigned char key, int x, int y) {
           break;
           //Train Start
           case 'w':
-
+            PlaySound("F:/class/SMSTR 8/Computer Graphics/Project/Working Folder/MP3/train/trainsound.wav",NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
           trainPos-=trainSpeed;
           update(0);
           break;
           case 's':
           trainPos+=trainSpeed;
+          PlaySound("F:/class/SMSTR 8/Computer Graphics/Project/Working Folder/MP3/train/trainsound.wav",NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
           update(0);
           break;
 
           case 'g':
-           PlaySound("F:/class/SMSTR 8/Computer Graphics/Project/Working Folder/MP3/train/trainsound.wav",NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
-          break;
-
-          case 'G':
               PlaySound(NULL,NULL,SND_ASYNC | SND_LOOP | SND_FILENAME);
           break;
 
-      case 'e':
+          case 'n':
+            night=true;
+            break;
+            case 'N':
+            night=false;
+            break;
+
+        case 'e':
          exit(0);
          break;
    }
@@ -736,7 +1098,7 @@ glTranslatef(-0.82,0.142f, 0.0f);
 glRotatef(anglel_M, 0.0, 0.0, 1.0);
 
 //MARRY GO ROUND
-glColor3ub(236, 240, 241);
+glColor3ub(60,120,60);
 glBegin(GL_LINE_LOOP);
 for(int i=0;i<200;i++)
 {
@@ -748,8 +1110,7 @@ for(int i=0;i<200;i++)
     glVertex2f(x,y );
 }
 glEnd();
-
-glColor3ub(236, 240, 241);
+glColor3ub(60,120,60);
 glBegin(GL_LINE_LOOP);
 glVertex2f(0.0,0.116);
 glVertex2f(-0.12,0);
@@ -758,6 +1119,7 @@ glVertex2f(0.12,0);
 glEnd();
 
 //bars
+glColor3ub(60,120,60);
 quad(-0.0017,0.1289,-0.0017,-0.135,0.0017,-0.135,0.0017,0.1289);
 quad(-0.13204,0.0026,-0.13204,0,0.13204,0,0.13204,0.0026);
 
@@ -772,7 +1134,8 @@ glColor3ub(142, 68, 173);
 quad(-0.0129,-0.0992,-0.0129,-0.1257,0.01337,-0.1257,0.01337,-0.0992);
 
 //AXIS of ROTATION
-glColor3ub(236, 240, 241);
+//glColor3ub(236, 240, 241);
+glColor3ub(60,120,60);
 glBegin(GL_POLYGON);
 for(int i=0;i<200;i++)
 {
@@ -890,7 +1253,7 @@ void bogy() {
 
     //body=====================
     glBegin(GL_POLYGON);
-    glColor3ub(200,255,255);
+    glColor3ub(128,15,46);
     glVertex2f(.0f,.1f);
     glVertex2f(.02f,.12f);
     glVertex2f(.02f,.32f);
@@ -900,7 +1263,7 @@ void bogy() {
     glEnd();
 
     glBegin(GL_QUADS);
-    glColor3ub(51,102,204);
+    glColor3ub(153,170,177);
     glVertex2f(-.4f,.3f);
     glVertex2f(-.4f,.1f);
     glVertex2f(.0f,.1f);
@@ -909,7 +1272,7 @@ void bogy() {
 
     //window==================
     glBegin(GL_QUADS);
-    glColor3ub(200,255,255);
+    glColor3ub(37,47,53);
     glVertex2f(-.35f,.23f);
     glVertex2f(-.35f,.18f);
     glVertex2f(-.3f,.18f);
@@ -920,7 +1283,7 @@ void bogy() {
     glPushMatrix();
         glTranslated(.07,0,0);
         glBegin(GL_QUADS);
-        glColor3ub(200,255,255);
+        //glColor3ub(200,255,255);
         glVertex2f(-.35f,.23f);
         glVertex2f(-.35f,.18f);
         glVertex2f(-.3f,.18f);
@@ -931,7 +1294,7 @@ void bogy() {
     glPushMatrix();
         glTranslated(.14,0,0);
         glBegin(GL_QUADS);
-        glColor3ub(200,255,255);
+        //glColor3ub(200,255,255);
         glVertex2f(-.35f,.23f);
         glVertex2f(-.35f,.18f);
         glVertex2f(-.3f,.18f);
@@ -942,7 +1305,7 @@ void bogy() {
     glPushMatrix();
         glTranslated(.21,0,0);
         glBegin(GL_QUADS);
-        glColor3ub(200,255,255);
+        //glColor3ub(200,255,255);
         glVertex2f(-.35f,.23f);
         glVertex2f(-.35f,.18f);
         glVertex2f(-.3f,.18f);
@@ -951,6 +1314,7 @@ void bogy() {
     glPopMatrix();
 
         glPushMatrix();
+        glColor3ub(128,15,46);
             glTranslated(0,-.1,0);
             glScalef(.4f,.4f,0.0f);
             circle(-.7,.5,.1);
@@ -985,7 +1349,7 @@ void full_train()
         glPushMatrix();
             glTranslated(0,.14,0);
             glBegin(GL_QUADS);
-            glColor3ub(160,160,160);
+            glColor3ub(37,47,53);
             glVertex2f(-.35f,.25f);
             glVertex2f(-.35f,.18f);
             glVertex2f(-.3f,.18f);
@@ -1039,7 +1403,26 @@ void display()
 {
    glClear(GL_COLOR_BUFFER_BIT);
    glLoadIdentity();
+    if(night)
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
+        glLoadIdentity();
+        nightsky();
+        stars();
+        moon();
+    }
+    else
+    {
+        glClearColor(0.53f,0.81f,0.92f,0.0f);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glLoadIdentity();
+        daysky();
+        sun();
+        cloud1();
+        bird();
+        cloud2();
 
+    }
     backGround();
     glPushMatrix();
         glTranslated(-.1,0,0);
@@ -1113,15 +1496,23 @@ int main(int argc, char** argv) {
 	cout<<"\n Press 'Shift m' for stop the rotation of Marry Go Round.\n";
     cout<<"\n Press 'b' for swinging the Boat.\n";
 	cout<<"\n Press 'Shift b' for stop the swinging.\n";
+	cout<<"\n Press 'n' for Night mood.\n";
+	cout<<"\n Press 'Shift n' for Day mood.\n";
+	cout<<"\n Press 'w' for Train move forward.\n";
+	cout<<"\n Press 's' for Train move backward.\n";
+	cout<<"\n Press 'g' to stop train sound.\n";
 	cout<<"\n Press 'e' for exit.\n";
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-   glutInitWindowSize(1800, 900);
-   glutInitWindowPosition(50, 50);
-   glutCreateWindow("Carnival");
-   glutDisplayFunc(display);
-   glutKeyboardFunc(keyboardHandle);
-   glutTimerFunc(100, update, 0);
-   glutMainLoop();
+    glutInitWindowSize(1800, 900);
+    glutInitWindowPosition(50, 50);
+    glutCreateWindow("Carnival");
+    glutDisplayFunc(display);
+    glutTimerFunc(40, cloudAnimation1, 0);
+    glutTimerFunc(40, cloudAnimation2, 0);
+    glutTimerFunc(20, birdAnimation, 0);
+    glutKeyboardFunc(keyboardHandle);
+    glutTimerFunc(100, update, 0);
+    glutMainLoop();
    return 0;
 }
 
